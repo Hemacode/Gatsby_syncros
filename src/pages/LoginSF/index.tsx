@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextBoxComponent } from "@syncfusion/ej2-react-inputs";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import {  navigate } from "gatsby";
-import LOGO_IMG from "../../images/logo.svg";
+import LOGO_IMG from '../../images/logo.svg'
 import "./style.scss";
 
 const LoginSF = () => {
@@ -10,7 +10,7 @@ const LoginSF = () => {
     const [token, setToken] = useState('');
 
     const handleSubmit= ()=>{
-        if(token){
+        if(token && typeof window !== 'undefined'){
         localStorage.setItem('auth',token)
         navigate("main/dashboard")
         }

@@ -8,13 +8,10 @@ import {
 import LayoutComponent from "../main/layout";
 import moment from "moment";
 
-type Ttoken = {
-    Authorization: any,
-    "X-Konami-Session-Timetoexpire": number,
-    "X-Konami-Iop": number
-  }
+
 const DeviceSetup = () =>{
     const [data, setData] = React.useState<{ deviceNoteTypes: object[]} | any>([]);
+    let authToken :any ;
 
     const pageSettings = {
       pageSize: 10,
@@ -23,20 +20,21 @@ const DeviceSetup = () =>{
       currentPage: 1,
     };
 
-    const token: Ttoken = {
-        Authorization: localStorage.getItem("auth"),
-        "X-Konami-Session-Timetoexpire":  1000000,
-        "X-Konami-Iop": 10000062
-    }
-    localStorage.setItem("token", JSON.stringify(token));
-    const getToken: string | null = localStorage.getItem("token");
-
-
+if( typeof window !== 'undefined'){
+   authToken = localStorage.getItem("auth");
+}
+  
   React.useEffect(() => {
-    if (getToken) {
+    if (authToken !== null) {
+      const synkHeaders: Record<string, string> = {
+        "Authorization": authToken ,
+        "X-Konami-Iop": "10000498", // Convert to string
+        "X-Konami-Session-Timetoexpire": "1696852247174", // Convert to string
+      };
+
       fetch("https://fedev.kgisystems.com:4242/v1/system/devices/notes/types?limit=-1", {
         "method": "GET",
-        "headers": JSON.parse(getToken),
+        "headers": synkHeaders,
       }).then(res => res.json()).then(data => {
         const dataObj = data?.deviceNoteTypes.map((item: any) => ({
           ...item,
