@@ -64,6 +64,12 @@ const Iconbar = (props: any) => {
                         </li>
                     )
                 })}
+                <li>
+                <Link to="/example">
+                    <i className={`e-menu-icon icon-system-admin`}></i>
+                    <span>{"GraphQL"}</span>
+                </Link>
+                </li>
             </ul>
             {/* <ul className="under-list">
                 <li className="logout" onClick={handleLogout}>
